@@ -1,0 +1,81 @@
+  .tableHtml_ahts56h46dfg5152g4awfa6sd4f6sa5df4 {
+    white-space: nowrap;
+    /* height: 100%; */
+  }
+
+  .tableDiv_frozen_ahts56h46dfg5152g4awfa6sd4f6sa5df4 {
+    display: inline-block;
+    /* height: 100%; */
+  }
+
+  .tableDiv_ahts56h46dfg5152g4awfa6sd4f6sa5df4 {
+    overflow-x: scroll;
+    height: 100%;
+    /* min-width: 300px; */
+    display: inline-block;
+  }
+
+td {
+  overflow: hidden;
+  box-sizing: border-box;
+  padding: 5px;
+  height: 30px;
+}
+
+/* td:hover {
+  border: 1px solid #a8c6eb;
+} */
+
+td:not(.lockedCell_ahts56h46dfg5152g4awfa6sd4f6sa5df4):hover {
+  border: 1px solid #a8c6eb;
+}
+
+th {
+  overflow: hidden;
+  box-sizing: border-box;
+  padding: 15px;
+  position: sticky;
+  top: 0px;
+}
+/* 
+tr {
+  box-sizing: border-box;
+} */
+
+.lockedCell_ahts56h46dfg5152g4awfa6sd4f6sa5df4 {
+  cursor: default;
+}
+
+.lockedCell_ahts56h46dfg5152g4awfa6sd4f6sa5df4:hover {
+  background-image: url(https://static1app2.clarizen.com/Clarizen/images/icons/ico_tiny-lock.png?version=20200804.3);
+  background-position: right top;
+  background-repeat: no-repeat;
+}
+
+.textEditorInput_ahts56h46dfg5152g4awfa6sd4f6sa5df4 {
+  width: 100%;
+  padding: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  border: none;
+  outline: none;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.textEditorInput_ahts56h46dfg5152g4awfa6sd4f6sa5df4:focus {
+  border: none;
+  outline: none;
+  appearance: none;
+}
+
+.filler_row_ahts56h46dfg5152g4awfa6sd4f6sa5df4 {
+  height: 0.75px;
+}
+
+.textAreaCell_ahts56h46dfg5152g4awfa6sd4f6sa5df4 {
+  /* white-space: normal;
+  word-wrap: normal; */
+}

@@ -1,0 +1,124 @@
+body {
+    margin: 0px;
+    background-color: white;
+    font-family: "Muli","Helvetica Neue", Helvetica, Arial, sans-serif;   
+}
+
+.popup-container-roland-component-popup {
+    --blue: #159ce4;
+    --lgt-blue: #67cff3;
+    --drk-blue: #147ec1;
+    --black: #32383c;
+    position: absolute;
+    background-color: white; 
+    overflow: hidden;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,.5);
+    height: 0px;
+    width: 0px;
+}
+
+.title-bar-roland-component-popup {
+    background-color: #333;
+    white-space: nowrap;
+    opacity: 0;
+    height: 28px;
+    width: 100%;
+    font-size: 13px;
+    font-weight: normal;
+    box-sizing: border-box;
+    overflow: hidden;
+    color: white;
+    text-align: center;
+}
+
+.title-text-roland-component-popup {
+    position: absolute;
+    float: left;
+    padding-left: 10px;
+    top: 6px;
+}
+
+.close-button-roland-component-popup {
+    float: right;
+    background: url(https://app2.clarizen.com/Clarizen/images/popup-bg-modern.png?version=20200804.3) no-repeat;
+    background-position: -1px -40px;
+    right: 7px;
+    width: 14px;
+    height: 14px;
+    position: absolute;
+    top: 6px;
+    cursor: pointer;
+}
+
+.close-button-roland-component-popup:hover {
+    background-position: -26px -40px;
+}
+
+.buttons-div-roland-component-popup {
+    opacity: 0;
+    height: 50px;
+    width: 100%;
+    border-radius: 0px 0px 10px 10px;
+    overflow: hidden;
+    color: white;
+    text-align: center;
+    bottom: 0px;
+    position: absolute;    
+}
+
+.button-div-roland-component-popup {
+    float: right;
+    height: 50px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.button-roland-component-popup {
+    padding: 5px 14px 5px 10px;
+    border: 1px solid #49aad3;
+    border-radius: 4px;
+    width: 85px;
+    -webkit-transition: box-shadow .15s ease-in;
+    transition: box-shadow .15s ease-in;
+    font-weight: 600;
+    line-height: 15px;
+    color: #49aad3;
+    background: #fff;
+    cursor: pointer;
+}
+
+.button-roland-component-popup:hover {
+    background-color: #f1f5f7;
+    cursor: pointer;
+}
+
+.content-div-roland-component-popup {
+    opacity: 0;
+    overflow-y: scroll;
+    border-bottom: 1px solid #ededed;
+}
+
+.content-div-roland-component-popup:focus {
+    outline: none;
+  }
+
+::-webkit-scrollbar {
+    width: 3px;
+    height: 3px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888; 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }

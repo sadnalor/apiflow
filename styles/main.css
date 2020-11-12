@@ -1,0 +1,186 @@
+#no-actions-text {
+    color: #333;
+    text-align: center;
+    margin: 20px;
+}
+
+#Settings-main-menu-button {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    text-align: center;
+    padding: 5px 14px 5px 10px;
+    border: 1px solid #49aad3;
+    border-radius: 4px;
+    width: 85px;
+    -webkit-transition: box-shadow .15s ease-in;
+    transition: box-shadow .15s ease-in;
+    font-weight: 600;
+    line-height: 15px;
+    color: #49aad3;
+    background: #fff;
+    cursor: pointer;
+}
+
+#Settings-main-menu-button:hover {
+    background-color: #f1f5f7;
+    cursor: pointer;
+}
+
+.main-menu-button {
+    text-align: center;
+    padding: 5px 14px 5px 10px;
+    border: 1px solid #49aad3;
+    border-radius: 4px;
+    width: 85px;
+    -webkit-transition: box-shadow .15s ease-in;
+    transition: box-shadow .15s ease-in;
+    font-weight: 600;
+    line-height: 15px;
+    color: #49aad3;
+    background: #fff;
+    cursor: pointer;
+}
+
+.main-menu-button:hover {
+    background-color: #f1f5f7;
+    cursor: pointer;
+}
+
+#settings-toolbar {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 50px;
+    border-bottom: 2px solid #555;
+    background-color: white;
+}
+
+#buttons-div {
+    height: 50px;
+    width: 100%;
+    border-radius: 0px 0px 10px 10px;
+    overflow: hidden;
+    color: white;
+    text-align: center;
+    bottom: 0px;
+    position: absolute;    
+}
+
+.button-div {
+    float: left;
+    height: 50px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+#settings-table {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    padding-top: 50px;
+}
+
+#vertical-buttons-div {
+    text-align: center;
+    width: 100%;
+}
+
+.vertical-button-div {
+    padding: 10px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.vertical-button {
+    margin: auto;
+    text-align: center;
+    padding: 5px 14px 5px 10px;
+    border: 1px solid #333;
+    border-radius: 4px;
+    width: 90%;
+    max-width: 400px;
+    -webkit-transition: box-shadow .15s ease-in;
+    transition: box-shadow .15s ease-in;
+    font-weight: 600;
+    line-height: 15px;
+    color: #fff;
+    background: #333;
+    cursor: pointer;
+}
+
+.variable-search {
+    width: 100%;
+    box-sizing: border-box;
+    height: 3em !important;
+    margin: 10px 0px;
+    display: inline-block;
+    margin-left: 0px;
+    background: white;
+    border-radius: 3px;
+    color: #555;
+    padding: 0px 5px;
+    white-space: nowrap;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+.variable-name {
+    font-weight: 900;
+}
+
+.vertical-button:hover {
+    background-color: #222;
+    cursor: pointer;
+}
+
+#actions-table-div {
+    overflow-x: scroll;
+}
+
+#actions-table {
+    min-width: 100%;
+    border-spacing: 0px;
+}
+
+.actions-table-row {
+    cursor: pointer;
+    background-color: #f9f9f9;
+}
+
+.actions-table-row:hover {
+    background: #49aad3;
+    color: white;
+}
+
+.actions-table-th {
+    font-size: 20px;
+    text-align: left;
+    padding: 10px;
+    background-color: #e0e0e0;
+}
+
+.actions-table-th:not(.last-column) {
+    border-right: 2px solid #555;
+}
+
+.actions-table-td {
+    font-size: 16px;
+    text-align: left;
+    padding: 5px;
+    
+}
+
+.actions-table-row:not(:last-child) .actions-table-td {
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.actions-table-td:not(.last-column) {
+    border-right: 2px solid #e0e0e0;
+}
+
+.actions-table-selected-row {
+    background: #49aad3;
+    color: white;
+}

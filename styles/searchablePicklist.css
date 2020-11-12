@@ -1,0 +1,40 @@
+.search-input-roland-component-searchable-picklist {
+    width: 40em !important;
+    height: 1.2em !important;
+    display: inline-block;
+    margin-left: 10px;
+    background: white;
+    border-radius: 3px;
+    color: #555;
+    padding: 0px 5px;
+    white-space: nowrap;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+.list-roland-component-searchable-picklist {
+    z-index: 9999;
+    background: white;
+    position: fixed;
+    max-height: 40em;
+    border-radius: 3px;
+    border: 1px solid #555;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.list-element-roland-component-searchable-picklist {
+    padding: 2px 5px;
+    cursor: pointer;
+
+}
+
+.list-element-roland-component-searchable-picklist:hover {
+    background-color: #333;
+    color: white;
+}
+
+.highlighted-list-element-roland-component-searchable-picklist {
+    background-color: #333;
+    color: white;
+}

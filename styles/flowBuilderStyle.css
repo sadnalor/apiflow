@@ -1,0 +1,109 @@
+.api-call-step-roland-component-flow-builder {
+    padding: 1.5em;
+    padding-right: 0em;
+}
+
+.conditional-action-list-step-roland-component-flow-builder {
+    padding: 1.5em;
+    padding-right: 0em;
+}
+
+.while-loop-step-roland-component-flow-builder {
+    padding: 1.5em;
+    padding-right: 0em;
+}
+
+.step-roland-component-flow-builder {
+    padding: 1.5em;
+    padding-right: 0em;
+}
+
+.builder-div-roland-component-flow-builder {
+    padding-right: 1em;   
+}
+
+.step-selector-roland-component-flow-builder {
+    padding: 0.5em 1em;
+    background: #333;
+    border-radius: 1em;
+    margin-bottom: 0.5em;
+    color: white;
+    height: 1.2em;
+}
+
+.step-selector-roland-component-flow-builder span {
+    vertical-align: top;
+}
+
+.add-step-button-roland-component-flow-builder {
+    padding: 0.5em 1em;
+    background: #333;
+    border-radius: 1em;
+    margin-bottom: 0.5em;
+    color: white;
+    width: fit-content;
+    cursor: pointer;
+}
+
+.add-step-button-roland-component-flow-builder:hover {
+    background: #222;
+    
+}
+
+
+  .buttons-div-roland-component-flow-builder {
+    height: 50px;
+    width: 100%;
+    overflow: hidden;
+    color: white;
+    text-align: center;
+}
+
+.button-div-roland-component-flow-builder {
+    float: left;
+    height: 50px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.button-roland-component-flow-builder {
+    padding: 5px 14px 5px 10px;
+    border: 1px solid #49aad3;
+    border-radius: 4px;
+    width: 120px;
+    -webkit-transition: box-shadow .15s ease-in;
+    transition: box-shadow .15s ease-in;
+    font-weight: 600;
+    line-height: 15px;
+    color: #49aad3;
+    background: #fff;
+    cursor: pointer;
+}
+
+.button-roland-component-flow-builder:not(.disabled-button-roland-component-flow-builder):hover {
+    background-color: #f1f5f7;
+}
+
+.disabled-button-roland-component-flow-builder {
+    color: grey;
+    border: 1px solid grey;
+    cursor: default;
+}
+
+.move-up-down-buttons-div-roland-component-flow-builder {
+    padding: 1px 10px;
+    float: left;
+}
+
+.move-up-down-button-roland-component-flow-builder {
+    cursor: pointer;
+}
+
+.move-up-down-button-roland-component-flow-builder:not(.disabled):hover {
+    color: #bbb;
+}
+
+.move-up-down-button-roland-component-flow-builder.disabled {
+    opacity: 0.6;
+    cursor: default;
+  }
