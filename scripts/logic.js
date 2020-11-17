@@ -12,7 +12,7 @@ class Context {
             organizationId: "5iud9lre7cfpilbalaailivkt0",
             organizationName: "Roland demo",
             serverUrl: "https://api.clarizen.com/V2.0/services",
-            sessionId: "157018c7-9b06-4e97-b417-74c5109fdf9f_26464129",
+            sessionId: "f75c86ab-264a-4889-9bac-2f5541b6369c_26464129",
             viewMode: "Expanded"
         };
     }

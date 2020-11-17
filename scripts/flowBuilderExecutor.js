@@ -51,11 +51,15 @@ class FlowBuilderExecutor {
                     case "json":
                         formRow.error = this.jsonValidationError(formRow);
                         break;
+                    case "js":
+                        formRow.error = this.jsValidationError(formRow);
+                        break;
                     case "booleanJs":
                         formRow.error = this.booleanJsValidationError(formRow);
                         break;
                     case "iterableJs":
                         formRow.error = this.iterableJsValidationError(formRow);
+                        this.setInitialTargetObjectValue(step, formRow);
                         break;
                 }
                 if (formRow.error != null) {
@@ -114,26 +118,7 @@ class FlowBuilderExecutor {
                         break;
                     case "iterableJs":
                         formRow.error = this.iterableJsValidationError(formRow);
-                        if (formRow.error === null && typeof this.userVariables[step.form.Variable.value] === "undefined") {
-                            if (Array.isArray(formRow.value)) {
-                                if (formRow.value.length > 0) {
-                                    this.userVariables[step.form.Variable.value + "_key"] = 0;
-                                    this.userVariables[step.form.Variable.value] = formRow.value[0];
-                                } else {
-                                    this.userVariables[step.form.Variable.value + "_key"] = null;
-                                    this.userVariables[step.form.Variable.value] = null;
-                                }
-                            } else if (typeof formRow.value === "object") {
-                                if (Object.keys(formRow.value).length > 0) {
-                                    this.userVariables[step.form.Variable.value + "_key"] = Object.keys(formRow.value)[0];
-                                    this.userVariables[step.form.Variable.value] = formRow.value[Object.keys(formRow.value)[0]];
-                                } else {
-                                    this.userVariables[step.form.Variable.value + "_key"] = null;
-                                    this.userVariables[step.form.Variable.value] = null;
-                                }
-                            }
-
-                        }
+                        this.setInitialTargetObjectValue(step, formRow);
                         break;
                     case "varName":
                         formRow.error = this.varNameValidationError(formRow);
@@ -215,6 +200,28 @@ class FlowBuilderExecutor {
                 return "Step " + (step.parentAddress + step.order) + " failed validation check.";
             } else {
                 return null;
+            }
+        }
+    }
+
+    setInitialTargetObjectValue = (step, formRow) => {
+        if (formRow.error === null && typeof this.userVariables[step.form.Variable.value] === "undefined") {
+            if (Array.isArray(formRow.value)) {
+                if (formRow.value.length > 0) {
+                    this.userVariables[step.form.Variable.value + "_key"] = 0;
+                    this.userVariables[step.form.Variable.value] = formRow.value[0];
+                } else {
+                    this.userVariables[step.form.Variable.value + "_key"] = null;
+                    this.userVariables[step.form.Variable.value] = null;
+                }
+            } else if (typeof formRow.value === "object") {
+                if (Object.keys(formRow.value).length > 0) {
+                    this.userVariables[step.form.Variable.value + "_key"] = Object.keys(formRow.value)[0];
+                    this.userVariables[step.form.Variable.value] = formRow.value[Object.keys(formRow.value)[0]];
+                } else {
+                    this.userVariables[step.form.Variable.value + "_key"] = null;
+                    this.userVariables[step.form.Variable.value] = null;
+                }
             }
         }
     }
@@ -616,8 +623,95 @@ class FlowBuilderExecutor {
                     errors[step.parentAddress + step.order] = err;
                     return {success: false, errors: errors, responses: responses};
                 }
+            } else if (step.type = "bulkExecute") {
+                try {
+                    this.userVariables[step.form["Output Variable"].value] = await this.bulkExecute(step);
+                    step.form["Output Variable"].locked = true;
+                    responses[step.parentAddress + step.order] = this.userVariables[step.form["Output Variable"].value];
+                    return {success: true, errors: errors, responses: responses};
+                } catch(err) {
+                    this.userVariables[step.form["Output Variable"].value] = err;
+                    errors[step.parentAddress + step.order] = err;
+                    return {success: false, errors: errors, responses: responses};
+                }
             }
         }
+    }
+
+    bulkExecute = async step => {
+        let fullRequestArray = this.allBulkExecuteRequests(step),
+        batchedRequests = this.batchedRequests(fullRequestArray, step.form["Batch Size"].value);
+        console.log(batchedRequests);
+        let responses = await this.bulkExecuteInbatches(batchedRequests, step.form["Pause Between Batches"].value);
+        console.log(responses);
+        return responses;
+    }
+
+    bulkExecuteInbatches = async (requests, pauseBetweenbatches) => {
+        let apiCallSettings,
+        responses = [],
+        response;
+        for (let i in requests) {
+            apiCallSettings = {
+                endpoint: this.userVariables.context.server.endpointUrlPrefix + "/bulk/execute",
+                method: "POST",
+                headers: {
+                    "Authorization": "Session " + this.userVariables.context.server.sessionId
+                },
+                payload: JSON.stringify(requests[i])
+            }
+            response = await this.request(apiCallSettings);
+            responses.push(response);
+            await this.pause(pauseBetweenbatches);
+            console.log("after pause");
+        }
+        return responses;
+    }
+
+    pause = duration => {
+        return new Promise(success => {
+            console.log("pausing");
+            setTimeout(() => {
+                success();
+            }, duration);
+        });
+    }
+
+    batchedRequests = (fullRequestArray, batchSize) => {
+        let batchedRequests = [],
+        batch = {"requests": []},
+        counter = 0;
+        for (let i in fullRequestArray) {
+            if (counter < batchSize) {
+                batch.requests.push(fullRequestArray[i]);
+                counter ++;
+            } else {
+                batchedRequests.push(batch);
+                batch = {"requests": []};
+                batch.requests.push(fullRequestArray[i]);
+                counter = 1;
+            }
+        }
+        batchedRequests.push(batch);
+        return batchedRequests;
+    }
+
+    allBulkExecuteRequests = step => {
+        let iterable = step.form.Source.value,
+        evaluationCriteria = step.form.Filter.value,
+        payloadMap = step.form["Payload Map"].value,
+        requests = [];
+        for (let i in iterable) {
+            this.userVariables[step.form.Variable.value] = iterable[i];
+            this.userVariables[step.form.Variable.value + "_key"] = i;
+            this.syntaxCheck(step, false);
+            evaluationCriteria = step.form.Filter.value;
+            payloadMap = step.form["Payload Map"].value;
+            if (evaluationCriteria) {
+                requests.push(payloadMap);
+            }
+        }
+        return requests;
     }
 
     htmlOutput = (step, e) => {

@@ -1995,15 +1995,22 @@ class FlowBuilderTemplates {
                 },
                 "Payload Map": {
                     type: "textArea",
-                    stringValue: "null",
-                    value: null,
+                    stringValue: `new Object({
+                        "url": "/data/objects",
+                        "method": "POST",
+                        "body": {
+                            "id": "/Project/" + {{${("targetObject" + parentAddress + order).toString().replace(/\./g, "_")}}}.ExternalId,
+                            "Name": {{${("targetObject" + parentAddress + order).toString().replace(/\./g, "_")}}}.Name + " 123"
+                        }
+                      })`,
+                    value: {},
                     mandatory: true,
-                    error: "This field is mandatory.",
+                    error: null,
                     tooltip: 'This field accepts JavaScript. The output should be a valid payload in JSON format.',
                     placeholder: "Enter an expression that evaluates to a valid payload in JSON format...",
                     style: "padding-left:0px",
                     locked: false,
-                    validationType: "json"
+                    validationType: "js"
                 },
                 "Filter": {
                     type: "textArea",
@@ -2040,6 +2047,18 @@ class FlowBuilderTemplates {
                     style: "padding-left:0px",
                     locked: false,
                     validationType: "integer"
+                },
+                "Output Variable": {
+                    type: "textInput",
+                    stringValue: ("var" + parentAddress + order).toString().replace(/\./g, "_"),
+                    value: ("var" + parentAddress + order).toString().replace(/\./g, "_"),
+                    mandatory: true,
+                    error: null,
+                    tooltip: "You will be able to access this variable in the following steps. This should be an alphanumeric string (underscores are also allowed).",
+                    placeholder: "Enter the variable name here...",
+                    style: "padding-left:0px",
+                    locked: false,
+                    validationType: "varName"
                 }
             },
             name: "Clarizen One Bulk Execute In Batches",
