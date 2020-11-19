@@ -44,8 +44,7 @@ const main = async () => {
         appId: clarizenData.appUniqueId,
         encryptionKey: clarizenData.encryptionKey,
         saveDataStorageObject: clarizenData.dataObjectStorageLocation,
-        saveFileDataType: clarizenData.saveFileDataType,
-
+        saveFileDataType: clarizenData.saveFileDataType
     },
     mainMenu = new ApiFlowMainMenu(clarizenContext);
     await mainMenu.initialize();
