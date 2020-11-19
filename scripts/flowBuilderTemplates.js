@@ -2099,6 +2099,18 @@ class FlowBuilderTemplates {
                     style: "padding-left:0px",
                     locked: false,
                     validationType: "integer"
+                },
+                "Output Variable": {
+                    type: "textInput",
+                    stringValue: ("var" + parentAddress + order).toString().replace(/\./g, "_"),
+                    value: ("var" + parentAddress + order).toString().replace(/\./g, "_"),
+                    mandatory: true,
+                    error: null,
+                    tooltip: "You will be able to access this variable in the following steps. This should be an alphanumeric string (underscores are also allowed).",
+                    placeholder: "Enter the variable name here...",
+                    style: "padding-left:0px",
+                    locked: false,
+                    validationType: "varName"
                 }
             },
             name: "Clarizen One Bulk Execute In Batches",
