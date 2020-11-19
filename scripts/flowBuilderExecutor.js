@@ -76,6 +76,7 @@ class FlowBuilderExecutor {
                         break;
                     case "iterableJs":
                         formRow.error = this.iterableJsValidationError(formRow);
+                        this.assignFirstValueForTesting(step, formRow);
                         break;
                 }
                 if (formRow.error != null) {
@@ -134,26 +135,7 @@ class FlowBuilderExecutor {
                         break;
                     case "iterableJs":
                         formRow.error = this.iterableJsValidationError(formRow);
-                        if (formRow.error === null && typeof this.userVariables[step.form.Variable.value] === "undefined") {
-                            if (Array.isArray(formRow.value)) {
-                                if (formRow.value.length > 0) {
-                                    this.userVariables[step.form.Variable.value + "_key"] = 0;
-                                    this.userVariables[step.form.Variable.value] = formRow.value[0];
-                                } else {
-                                    this.userVariables[step.form.Variable.value + "_key"] = null;
-                                    this.userVariables[step.form.Variable.value] = null;
-                                }
-                            } else if (typeof formRow.value === "object") {
-                                if (Object.keys(formRow.value).length > 0) {
-                                    this.userVariables[step.form.Variable.value + "_key"] = Object.keys(formRow.value)[0];
-                                    this.userVariables[step.form.Variable.value] = formRow.value[Object.keys(formRow.value)[0]];
-                                } else {
-                                    this.userVariables[step.form.Variable.value + "_key"] = null;
-                                    this.userVariables[step.form.Variable.value] = null;
-                                }
-                            }
-
-                        }
+                        this.assignFirstValueForTesting(step, formRow);
                         break;
                     case "varName":
                         formRow.error = this.varNameValidationError(formRow);
@@ -235,6 +217,28 @@ class FlowBuilderExecutor {
                 return "Step " + (step.parentAddress + step.order) + " failed validation check.";
             } else {
                 return null;
+            }
+        }
+    }
+
+    assignFirstValueForTesting = (step, formRow) => {
+        if (formRow.error === null && typeof this.userVariables[step.form.Variable.value] === "undefined") {
+            if (Array.isArray(formRow.value)) {
+                if (formRow.value.length > 0) {
+                    this.userVariables[step.form.Variable.value + "_key"] = 0;
+                    this.userVariables[step.form.Variable.value] = formRow.value[0];
+                } else {
+                    this.userVariables[step.form.Variable.value + "_key"] = null;
+                    this.userVariables[step.form.Variable.value] = null;
+                }
+            } else if (typeof formRow.value === "object") {
+                if (Object.keys(formRow.value).length > 0) {
+                    this.userVariables[step.form.Variable.value + "_key"] = Object.keys(formRow.value)[0];
+                    this.userVariables[step.form.Variable.value] = formRow.value[Object.keys(formRow.value)[0]];
+                } else {
+                    this.userVariables[step.form.Variable.value + "_key"] = null;
+                    this.userVariables[step.form.Variable.value] = null;
+                }
             }
         }
     }

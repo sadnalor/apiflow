@@ -2047,7 +2047,19 @@ class FlowBuilderTemplates {
                 },
                 "Payload Map": {
                     type: "textArea",
-                    stringValue: "null",
+                    stringValue: `new Object({
+                        "url": "/data/createAndRetrieve",
+                        "method": "POST",
+                        "body": {
+                          "entity": {
+                            "id": "/Project",
+                            "Name": {{${("targetObject" + parentAddress + order).toString().replace(/\./g, "_")}}}.Name + " updated"
+                          },
+                          "fields": [
+                            "ExternalId"
+                          ]
+                        }
+                      })`,
                     value: null,
                     mandatory: true,
                     error: "This field is mandatory.",
