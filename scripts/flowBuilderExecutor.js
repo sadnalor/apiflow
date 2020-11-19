@@ -791,6 +791,9 @@ class FlowBuilderExecutor {
             evaluationCriteria = step.form.Filter.value;
             payloadMap = step.form["Payload Map"].value;
             if (evaluationCriteria) {
+                if (typeof payloadMap.body === "function") {
+                    payloadMap.body = payloadMap.body();
+                }
                 requests.push(payloadMap);
             }
         }
