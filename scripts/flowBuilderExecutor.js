@@ -641,7 +641,7 @@ class FlowBuilderExecutor {
                     return {success: false, errors: errors, responses: responses};
                 }
             } else if (step.type === "bulkExecute") {
-                console.log(step);
+                //console.log(step);
                 try {
                     this.userVariables[step.form["Output Variable"].value] = await this.bulkExecute(step);
                     step.form["Output Variable"].locked = true;
@@ -701,7 +701,6 @@ class FlowBuilderExecutor {
                       type: 'binary'
                   });
                   workbook.SheetNames.forEach(function(sheetName) {
-                    
                       var XL_row_object = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
                       var json_object = JSON.stringify(XL_row_object);
                       //document.getElementById("jsonObject").innerHTML = json_object;
@@ -718,46 +717,6 @@ class FlowBuilderExecutor {
                 reader.readAsBinaryString(selectedFile);
           });
         });
-    }
-
-    
-
-    genericPopup = (id, content, title, width, height, zIndex, e, buttons, keyEvents, dim, expandStepDuration, collapseStepDuration) => {
-        id = typeof id === "undefined" || id === null ? "generic-popup-id" : id;
-        content = typeof content === "undefined" || content === null ? "" : content;
-        title = typeof title === "undefined" || title === null ? "" : title;
-        width = typeof width === "undefined" || width === null ? 50 : width;
-        height = typeof height === "undefined" || height === null ? 50 : height;
-        zIndex = typeof zIndex === "undefined" || zIndex === null ? 9000 : zIndex;
-        buttons = typeof buttons === "undefined" || buttons === null ? {OK: {handler: null}} : buttons;
-        keyEvents = typeof keyEvents === "undefined" || keyEvents === null ? {13: {handler: null}, 27: {handler: null}} : keyEvents;
-        dim = typeof dim === "undefined" || dim === null ? true : dim;
-        expandStepDuration = typeof expandStepDuration === "undefined" || expandStepDuration === null ? 300 : expandStepDuration;
-        collapseStepDuration = typeof collapseStepDuration === "undefined" || collapseStepDuration === null ? 300 : collapseStepDuration;
-        let popupOptions = {
-            title: title,
-            content: `<div style="padding:5px;">${content}</div>`,
-            buttons: buttons,
-            expandStepDuration: expandStepDuration,
-            collapseStepDuration: collapseStepDuration,
-            keyEvents: keyEvents,
-            dim: dim
-        },
-        popup = new Popup(popupOptions);
-        if (keyEvents[13].handler === null) {
-            popup.keyEvents[13].handler = popup.collapse;
-        } else {
-            popup.keyEvents[13].handler = keyEvents[13].handler
-        }
-        if (keyEvents[27].handler === null) {
-            popup.keyEvents[27].handler = popup.collapse;
-        } else {
-            popup.keyEvents[27].handler = keyEvents[27].handler
-        }
-        $("body").append(`<div id="${id}" style="padding:5px;position:fixed;width:${width}%;height:${height}%;top:${(100 - height) / 2}%;left:${(100 - width) / 2}%;z-index:${zIndex};"></div>`);
-        popup.render(id);
-        popup.expand(e);
-        return popup;
     }
 
     bulkExecute = async step => {
