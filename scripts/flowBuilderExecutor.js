@@ -354,6 +354,7 @@ class FlowBuilderExecutor {
         result = variableInsertionResults.result;
         if (error === null) {
             try {
+                console.log(result);
                 result = eval(result);
                 formRow.value = result;
                 return null;
@@ -642,16 +643,16 @@ class FlowBuilderExecutor {
                 }
             } else if (step.type === "bulkExecute") {
                 //console.log(step);
-                try {
+                
                     this.userVariables[step.form["Output Variable"].value] = await this.bulkExecute(step);
                     step.form["Output Variable"].locked = true;
                     responses[step.parentAddress + step.order] = this.userVariables[step.form["Output Variable"].value];
                     return {success: true, errors: errors, responses: responses};
-                } catch(err) {
+                /* } catch(err) {
                     this.userVariables[step.form["Output Variable"].value] = err;
                     errors[step.parentAddress + step.order] = err;
                     return {success: false, errors: errors, responses: responses};
-                }
+                } */
             } else if (step.type === "importFromExcel") {
                 try {
                     this.loader.hide();
