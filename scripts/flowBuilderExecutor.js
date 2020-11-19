@@ -17,7 +17,7 @@ class FlowBuilderExecutor {
                         break;
                     case "text":
                         formRow.error = this.textValidationError(formRow);
-                        formRow.error = formRow.mandatory ? formRow.error : null;
+                        //formRow.error = formRow.mandatory ? formRow.error : null;
                         break;
                     case "method":
                         formRow.error = this.methodValidationError(formRow);
@@ -27,6 +27,26 @@ class FlowBuilderExecutor {
                         break;
                     case "booleanJs":
                         formRow.error = this.booleanJsValidationError(formRow);
+                        break;
+                }
+                if (formRow.error != null) {
+                    step.passedSyntaxCheck = false;
+                }
+            }
+            if (!step.passedSyntaxCheck) {
+                return "Step " + (step.parentAddress + step.order) + " failed validation check.";
+            } else {
+                return null;
+            }
+        } else if (step.type === "importFromExcel") {
+            for (let i in form) {
+                formRow = form[i];
+                switch (formRow.validationType) {
+                    case "varName":
+                        formRow.error = this.varNameValidationError(formRow);
+                        break;
+                    case "text":
+                        formRow.error = this.textValidationError(formRow);
                         break;
                 }
                 if (formRow.error != null) {
@@ -616,6 +636,200 @@ class FlowBuilderExecutor {
                     errors[step.parentAddress + step.order] = err;
                     return {success: false, errors: errors, responses: responses};
                 }
+<<<<<<< Updated upstream
+=======
+            } else if (step.type === "bulkExecute") {
+                console.log(step);
+                try {
+                    this.userVariables[step.form["Output Variable"].value] = await this.bulkExecute(step);
+                    step.form["Output Variable"].locked = true;
+                    responses[step.parentAddress + step.order] = this.userVariables[step.form["Output Variable"].value];
+                    return {success: true, errors: errors, responses: responses};
+                } catch(err) {
+                    this.userVariables[step.form["Output Variable"].value] = err;
+                    errors[step.parentAddress + step.order] = err;
+                    return {success: false, errors: errors, responses: responses};
+                }
+            } else if (step.type === "importFromExcel") {
+                try {
+                    this.loader.hide();
+                    await this.importFromExcel(step, e);
+                    this.loader.show();
+                    responses[step.parentAddress + step.order] = "File imported successfully.";
+                    return {success: true, errors: errors, responses: responses};
+                } catch(err) {
+                    errors[step.parentAddress + step.order] = err;
+                    return {success: false, errors: errors, responses: responses};
+                }
+            }
+        }
+    }
+
+    importFromExcel = (step, e) => {
+        let self = this;
+        return new Promise(success => {
+            let popupOptions = {
+                title: "Please select an Excel file",
+                content: `<div style="padding:5px;">${step.form.Instructions.value} <br><br><input type="file" id="fileUploader" name="fileUploader" accept=".xls, .xlsx"/></div>`,
+                buttons: {},
+                expandStepDuration: 200,
+                collapseStepDuration: 200,
+                collapseCallback: success,
+                keyEvents: { //optional
+                    13: {
+                        handler: null
+                    },
+                    27: {
+                        handler: null
+                    }
+                },
+                dim: true
+            },
+            popup;
+            popup = new Popup(popupOptions);
+            $("body").append(`<div id="excel-input" style="padding:5px;position:fixed;${step.form["Form Size and Position"].value};z-index:9100;"></div>`);
+            popup.render("excel-input");
+            popup.expand(e);
+            $("#fileUploader").change(function(evt){
+                var selectedFile = evt.target.files[0];
+                var reader = new FileReader();
+                reader.onload = function(event) {
+                  var data = event.target.result;
+                  var workbook = XLSX.read(data, {
+                      type: 'binary'
+                  });
+                  workbook.SheetNames.forEach(function(sheetName) {
+                    
+                      var XL_row_object = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+                      var json_object = JSON.stringify(XL_row_object);
+                      //document.getElementById("jsonObject").innerHTML = json_object;
+                        console.log(JSON.parse(json_object));
+                        self.userVariables[step.form.Variable.value] = JSON.parse(json_object);
+                        popup.collapse();
+                    })
+                };
+
+                reader.onerror = function(event) {
+                  console.error("File could not be read! Code " + event.target.error.code);
+                };
+
+                reader.readAsBinaryString(selectedFile);
+          });
+        });
+    }
+
+    
+
+    genericPopup = (id, content, title, width, height, zIndex, e, buttons, keyEvents, dim, expandStepDuration, collapseStepDuration) => {
+        id = typeof id === "undefined" || id === null ? "generic-popup-id" : id;
+        content = typeof content === "undefined" || content === null ? "" : content;
+        title = typeof title === "undefined" || title === null ? "" : title;
+        width = typeof width === "undefined" || width === null ? 50 : width;
+        height = typeof height === "undefined" || height === null ? 50 : height;
+        zIndex = typeof zIndex === "undefined" || zIndex === null ? 9000 : zIndex;
+        buttons = typeof buttons === "undefined" || buttons === null ? {OK: {handler: null}} : buttons;
+        keyEvents = typeof keyEvents === "undefined" || keyEvents === null ? {13: {handler: null}, 27: {handler: null}} : keyEvents;
+        dim = typeof dim === "undefined" || dim === null ? true : dim;
+        expandStepDuration = typeof expandStepDuration === "undefined" || expandStepDuration === null ? 300 : expandStepDuration;
+        collapseStepDuration = typeof collapseStepDuration === "undefined" || collapseStepDuration === null ? 300 : collapseStepDuration;
+        let popupOptions = {
+            title: title,
+            content: `<div style="padding:5px;">${content}</div>`,
+            buttons: buttons,
+            expandStepDuration: expandStepDuration,
+            collapseStepDuration: collapseStepDuration,
+            keyEvents: keyEvents,
+            dim: dim
+        },
+        popup = new Popup(popupOptions);
+        if (keyEvents[13].handler === null) {
+            popup.keyEvents[13].handler = popup.collapse;
+        } else {
+            popup.keyEvents[13].handler = keyEvents[13].handler
+        }
+        if (keyEvents[27].handler === null) {
+            popup.keyEvents[27].handler = popup.collapse;
+        } else {
+            popup.keyEvents[27].handler = keyEvents[27].handler
+        }
+        $("body").append(`<div id="${id}" style="padding:5px;position:fixed;width:${width}%;height:${height}%;top:${(100 - height) / 2}%;left:${(100 - width) / 2}%;z-index:${zIndex};"></div>`);
+        popup.render(id);
+        popup.expand(e);
+        return popup;
+    }
+
+    bulkExecute = async step => {
+        let fullRequestArray = this.allBulkExecuteRequests(step),
+        batchedRequests = this.batchedRequests(fullRequestArray, step.form["Batch Size"].value);
+        console.log(batchedRequests);
+        let responses = await this.bulkExecuteInbatches(batchedRequests, step.form["Pause Between Batches"].value);
+        console.log(responses);
+        return responses;
+    }
+
+    bulkExecuteInbatches = async (requests, pauseBetweenbatches) => {
+        let apiCallSettings,
+        responses = [],
+        response;
+        for (let i in requests) {
+            apiCallSettings = {
+                endpoint: this.userVariables.context.server.endpointUrlPrefix + "/bulk/execute",
+                method: "POST",
+                headers: {
+                    "Authorization": "Session " + this.userVariables.context.server.sessionId
+                },
+                payload: JSON.stringify(requests[i])
+            }
+            response = await this.request(apiCallSettings);
+            responses.push(response);
+            await this.pause(pauseBetweenbatches);
+            console.log("after pause");
+        }
+        return responses;
+    }
+
+    pause = duration => {
+        return new Promise(success => {
+            console.log("pausing");
+            setTimeout(() => {
+                success();
+            }, duration);
+        });
+    }
+
+    batchedRequests = (fullRequestArray, batchSize) => {
+        let batchedRequests = [],
+        batch = {"requests": []},
+        counter = 0;
+        for (let i in fullRequestArray) {
+            if (counter < batchSize) {
+                batch.requests.push(fullRequestArray[i]);
+                counter ++;
+            } else {
+                batchedRequests.push(batch);
+                batch = {"requests": []};
+                batch.requests.push(fullRequestArray[i]);
+                counter = 1;
+            }
+        }
+        batchedRequests.push(batch);
+        return batchedRequests;
+    }
+
+    allBulkExecuteRequests = step => {
+        let iterable = step.form.Source.value,
+        evaluationCriteria = step.form.Filter.value,
+        payloadMap = step.form["Payload Map"].value,
+        requests = [];
+        for (let i in iterable) {
+            this.userVariables[step.form.Variable.value] = iterable[i];
+            this.userVariables[step.form.Variable.value + "_key"] = i;
+            this.syntaxCheck(step, false);
+            evaluationCriteria = step.form.Filter.value;
+            payloadMap = step.form["Payload Map"].value;
+            if (evaluationCriteria) {
+                requests.push(payloadMap);
+>>>>>>> Stashed changes
             }
         }
     }

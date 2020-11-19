@@ -430,6 +430,7 @@ class ApiFlowMainMenu {
 
     editFlow = e => {
         if (this.flowSelected != null) {
+            console.log(this.flowSelected);
             let popupOptions = {
                 title: "Flow Builder",
                 content: "",

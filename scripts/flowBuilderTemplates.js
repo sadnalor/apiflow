@@ -12,6 +12,7 @@ class FlowBuilderTemplates {
             "Run On": this.runOnLoopTemplate,
             "HTML Output": this.htmlOutputTemplate,
             "User Input Form": this.userInputFormTemplate,
+            "Import From Excel": this.importFromExcelTemplate,
             "Clarizen One Get Server Definition": this.clarizenOneGetServerDefinition,
             "Clarizen One Get Session Info": this.clarizenOneGetSessionInfo,
             "Clarizen One Login": this.clarizenOneLogin,
@@ -97,6 +98,7 @@ class FlowBuilderTemplates {
             "Clarizen Go Create Epic": this.clarizenGoCreateEpic,
             "Clarizen Go Edit Epic": this.clarizenGoEditEpic,
             "Clarizen Go Delete Epic": this.clarizenGoDeleteEpic,
+            
             
 
 
@@ -1891,6 +1893,56 @@ class FlowBuilderTemplates {
             level: level,
             order: order,
             passedSyntaxCheck: false
+        }
+    }
+
+    importFromExcelTemplate = (parentAddress, level, order) => {
+        return {
+            id:  this.generateUUID(),
+            form: {
+                "Variable": {
+                    type: "textInput",
+                    stringValue: ("var" + parentAddress + order).toString().replace(/\./g, "_"),
+                    value: ("var" + parentAddress + order).toString().replace(/\./g, "_"),
+                    mandatory: true,
+                    error: null,
+                    tooltip: "You will be able to access this variable in the following steps. This should be an alphanumeric string (underscores are also allowed).",
+                    placeholder: "Enter the variable name here...",
+                    style: "padding-left:0px",
+                    locked: false,
+                    validationType: "varName"
+                },
+                "Form Size and Position": {
+                    type: "textInput",
+                    stringValue: "width:40%;height:20%;top:20%;left:30%;",
+                    value: "width:40%;height:20%;top:20%;left:30%;",
+                    mandatory: true,
+                    error: null,
+                    tooltip: 'This field accepts CSS styling for form size and position.',
+                    placeholder: "Enter size and position for the input form in this field...",
+                    style: "padding-left:0px",
+                    locked: false,
+                    validationType: "text"
+                },
+                "Instructions": {
+                    type: "textArea",
+                    stringValue: "",
+                    value: null,
+                    mandatory: false,
+                    error: null,
+                    tooltip: "Instructions for the user.",
+                    placeholder: "Enter the instructions here...",
+                    style: "padding-left:0px",
+                    locked: false,
+                    validationType: "text"
+                }
+            },
+            name: "Import From Excel",
+            type: "importFromExcel",
+            parentAddress: parentAddress,
+            level: level,
+            order: order,
+            passedSyntaxCheck: true
         }
     }
 
