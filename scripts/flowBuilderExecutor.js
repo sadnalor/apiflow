@@ -68,8 +68,8 @@ class FlowBuilderExecutor {
                     case "integer":
                         formRow.error = this.integerValidationError(formRow);
                         break;
-                    case "json":
-                        formRow.error = this.jsonValidationError(formRow);
+                    case "js":
+                        formRow.error = this.jsValidationError(formRow);
                         break;
                     case "booleanJs":
                         formRow.error = this.booleanJsValidationError(formRow);
