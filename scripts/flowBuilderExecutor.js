@@ -794,6 +794,7 @@ class FlowBuilderExecutor {
                 requests.push(payloadMap);
             }
         }
+        return requests;
     }
 
     htmlOutput = (step, e) => {
