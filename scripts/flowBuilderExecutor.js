@@ -720,8 +720,10 @@ class FlowBuilderExecutor {
     }
 
     bulkExecute = async step => {
-        let fullRequestArray = this.allBulkExecuteRequests(step),
-        batchedRequests = this.batchedRequests(fullRequestArray, step.form["Batch Size"].value);
+        console.log(step);
+        let fullRequestArray = this.allBulkExecuteRequests(step);
+        console.log(fullRequestArray);
+        let batchedRequests = this.batchedRequests(fullRequestArray, step.form["Batch Size"].value);
         console.log(batchedRequests);
         let responses = await this.bulkExecuteInbatches(batchedRequests, step.form["Pause Between Batches"].value);
         console.log(responses);
