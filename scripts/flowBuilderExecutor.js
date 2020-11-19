@@ -636,8 +636,6 @@ class FlowBuilderExecutor {
                     errors[step.parentAddress + step.order] = err;
                     return {success: false, errors: errors, responses: responses};
                 }
-<<<<<<< Updated upstream
-=======
             } else if (step.type === "bulkExecute") {
                 console.log(step);
                 try {
@@ -829,7 +827,6 @@ class FlowBuilderExecutor {
             payloadMap = step.form["Payload Map"].value;
             if (evaluationCriteria) {
                 requests.push(payloadMap);
->>>>>>> Stashed changes
             }
         }
     }
