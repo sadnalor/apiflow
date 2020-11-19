@@ -2048,26 +2048,21 @@ class FlowBuilderTemplates {
                 "Payload Map": {
                     type: "textArea",
                     stringValue: `new Object({
-                        "url": "/data/createAndRetrieve",
+                        "url": "/data/objects",
                         "method": "POST",
                         "body": {
-                          "entity": {
-                            "id": "/Project",
-                            "Name": {{${("targetObject" + parentAddress + order).toString().replace(/\./g, "_")}}}.Name + " updated"
-                          },
-                          "fields": [
-                            "ExternalId"
-                          ]
+                            "id": "/Project/" + {{${("targetObject" + parentAddress + order).toString().replace(/\./g, "_")}}}.ExternalId,
+                            "Name": {{${("targetObject" + parentAddress + order).toString().replace(/\./g, "_")}}}.Name + " 123"
                         }
                       })`,
-                    value: null,
+                    value: {},
                     mandatory: true,
-                    error: "This field is mandatory.",
+                    error: null,
                     tooltip: 'This field accepts JavaScript. The output should be a valid payload in JSON format.',
                     placeholder: "Enter an expression that evaluates to a valid payload in JSON format...",
                     style: "padding-left:0px",
                     locked: false,
-                    validationType: "json"
+                    validationType: "js"
                 },
                 "Filter": {
                     type: "textArea",
