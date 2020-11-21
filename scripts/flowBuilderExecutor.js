@@ -354,7 +354,6 @@ class FlowBuilderExecutor {
         result = variableInsertionResults.result;
         if (error === null) {
             try {
-                console.log(result);
                 result = eval(result);
                 formRow.value = result;
                 return null;
@@ -642,17 +641,16 @@ class FlowBuilderExecutor {
                     return {success: false, errors: errors, responses: responses};
                 }
             } else if (step.type === "bulkExecute") {
-                //console.log(step);
-                
+                try {
                     this.userVariables[step.form["Output Variable"].value] = await this.bulkExecute(step);
                     step.form["Output Variable"].locked = true;
                     responses[step.parentAddress + step.order] = this.userVariables[step.form["Output Variable"].value];
                     return {success: true, errors: errors, responses: responses};
-                /* } catch(err) {
+                } catch(err) {
                     this.userVariables[step.form["Output Variable"].value] = err;
                     errors[step.parentAddress + step.order] = err;
                     return {success: false, errors: errors, responses: responses};
-                } */
+                }
             } else if (step.type === "importFromExcel") {
                 try {
                     this.loader.hide();
@@ -704,8 +702,6 @@ class FlowBuilderExecutor {
                   workbook.SheetNames.forEach(function(sheetName) {
                       var XL_row_object = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
                       var json_object = JSON.stringify(XL_row_object);
-                      //document.getElementById("jsonObject").innerHTML = json_object;
-                        console.log(JSON.parse(json_object));
                         self.userVariables[step.form.Variable.value] = JSON.parse(json_object);
                         popup.collapse();
                     })
@@ -721,14 +717,10 @@ class FlowBuilderExecutor {
     }
 
     bulkExecute = async step => {
-        console.log(step);
         let fullRequestArray = this.allBulkExecuteRequests(step);
-        console.log(fullRequestArray);
         if (fullRequestArray.length > 0) {
             let batchedRequests = this.batchedRequests(fullRequestArray, step.form["Batch Size"].value);
-            console.log(batchedRequests);
             let responses = await this.bulkExecuteInbatches(batchedRequests, step.form["Pause Between Batches"].value);
-            console.log(responses);
             return responses;
         } else {
             return [{responses: []}];
@@ -751,14 +743,12 @@ class FlowBuilderExecutor {
             response = await this.request(apiCallSettings);
             responses.push(response);
             await this.pause(pauseBetweenbatches);
-            console.log("after pause");
         }
         return responses;
     }
 
     pause = duration => {
         return new Promise(success => {
-            console.log("pausing");
             setTimeout(() => {
                 success();
             }, duration);
