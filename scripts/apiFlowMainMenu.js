@@ -621,7 +621,7 @@ class ApiFlowMainMenu {
         popup = new Popup(popupOptions);
         popup.keyEvents[13].handler = popup.collapse;
         popup.keyEvents[27].handler = popup.collapse;
-        $("body").append(`<div id="flow-results" style="padding:5px;position:fixed;width:60%;height:30%;top:30%;left:20%;z-index:9000;"></div>`);
+        $("body").append(this.viewMode != "Expanded" ? `<div id="flow-results" style="padding:5px;position:fixed;width:98%;height:98%;top:1%;left:1%;z-index:9000;"></div>` : `<div id="flow-results" style="padding:5px;position:fixed;width:60%;height:30%;top:30%;left:20%;z-index:9000;"></div>`);
         popup.render("flow-results");
         popup.expand(e);
     }
