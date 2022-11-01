@@ -736,7 +736,8 @@ class FlowBuilderExecutor {
                 endpoint: this.userVariables.context.server.endpointUrlPrefix + "/bulk/execute",
                 method: "POST",
                 headers: {
-                    "Authorization": "Session " + this.userVariables.context.server.sessionId
+                    "Authorization": "Session " + this.userVariables.context.server.sessionId,
+                    "ApiRequester": "Publicis-RolandTest"
                 },
                 payload: JSON.stringify(requests[i])
             }
