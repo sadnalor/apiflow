@@ -737,7 +737,7 @@ class FlowBuilderExecutor {
                 method: "POST",
                 headers: {
                     "Authorization": "Session " + this.userVariables.context.server.sessionId,
-                    "ApiRequester": "Publicis-RolandTest"
+                    "ClzApiRequester": "Publicis-RolandTest"
                 },
                 payload: JSON.stringify(requests[i])
             }
