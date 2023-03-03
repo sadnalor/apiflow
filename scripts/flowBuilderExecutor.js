@@ -719,7 +719,8 @@ class FlowBuilderExecutor {
     bulkExecute = async step => {
         let fullRequestArray = this.allBulkExecuteRequests(step);
         if (fullRequestArray.length > 0) {
-            let batchedRequests = this.batchedRequests(fullRequestArray, step.form["Batch Size"].value);
+            let batchedRequests = this.batchedRequests(fullRequestArray, step.form["Batch Size"].value, step.form["Transactional"]);
+            console.log(batchedRequests);
             let responses = await this.bulkExecuteInbatches(batchedRequests, step.form["Pause Between Batches"].value);
             return responses;
         } else {
@@ -756,9 +757,9 @@ class FlowBuilderExecutor {
         });
     }
 
-    batchedRequests = (fullRequestArray, batchSize) => {
+    batchedRequests = (fullRequestArray, batchSize, transactional) => {
         let batchedRequests = [],
-        batch = {"requests": []},
+        batch = {"requests": [], "transactional": transactional},
         counter = 0;
         for (let i in fullRequestArray) {
             if (counter < batchSize) {

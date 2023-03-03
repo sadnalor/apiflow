@@ -2076,6 +2076,18 @@ class FlowBuilderTemplates {
                     locked: false,
                     validationType: "booleanJs"
                 },
+                "Transactional": {
+                    type: "textInput",
+                    stringValue: "1000",
+                    value: true,
+                    mandatory: true,
+                    error: null,
+                    tooltip: 'This field accepts JavaScript. The output should be an integer. This can be used to split the query into smaller batches in case of poor performance.',
+                    placeholder: "Enter an expression that evaluates to an integer...",
+                    style: "padding-left:0px",
+                    locked: false,
+                    validationType: "booleanJs"
+                },
                 "Batch Size": {
                     type: "textInput",
                     stringValue: "1000",
