@@ -2078,7 +2078,7 @@ class FlowBuilderTemplates {
                 },
                 "Transactional": {
                     type: "textInput",
-                    stringValue: "1000",
+                    stringValue: "true",
                     value: true,
                     mandatory: true,
                     error: null,
